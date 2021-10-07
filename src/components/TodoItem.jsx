@@ -1,28 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
+import classnames from 'classnames'
 
-function TodoItem({ todoList, onChange }) {
-  const [checkInput, setCheckInput] = useState(!todoList.active);
+function TodoItem({ todoItem, onToggle }) {
+  
+  const toggleChange = () => {
+    onToggle()
+  }
 
-  const checkClassName =
-    'todo-item ui-state-default ' +
-    (checkInput === false ? 'pending' : 'completed');
-  const checkActive = checkInput === true ? 'checked' : '';
-  const handleChange = () => {
-    setCheckInput(!checkInput);
-    onChange([checkInput, todoList.id]);
-  };
   return (
-    <li className={checkClassName}>
+    <li className={classnames('todo-item ui-state-default',{completed:!todoItem.active})}>
       <div className='checkbox'>
         <label>
           <input
             className='active'
             type='checkbox'
-            checked={checkActive}
-            onChange={handleChange}
+            checked={todoItem.active}
+            onChange={toggleChange}
           />
           &nbsp;
-          {todoList.text}
+          {todoItem.value}
         </label>
       </div>
     </li>
